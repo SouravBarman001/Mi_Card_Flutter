@@ -1,89 +1,58 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 void main() {
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+
+  int leftDiceNumber = 1;
+  int rightDiceNumber = 1;
+
+  void changeDiceFace(){
+    setState(() {
+      leftDiceNumber = Random().nextInt(5)+1;
+      rightDiceNumber = Random().nextInt(5)+1;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.teal,
-        body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+        backgroundColor: Colors.red,
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Colors.red,
+          title: const Text("Let's play with Dice"),
+        ),
+        body: Center(
+          child: Row(
             children: [
-              const CircleAvatar(
-                radius: 50.0,
-                backgroundImage: AssetImage('images/sourav.png'),
-              ),
-              const Text(
-                "Sourav Barman",
-                style: TextStyle(
-                  fontFamily: 'Pacifico',
-                  fontSize: 30.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+              Expanded(
+                child: TextButton(
+                  onPressed: () {
+                    changeDiceFace();
+                  },
+                  child: Image.asset('images/dice$leftDiceNumber.png',),
                 ),
               ),
-              const Text(
-                "Flutter Developer",
-                style: TextStyle(
-                  fontFamily: 'Source Sans Pro',
-                  fontSize: 20.0,
-                  color: Colors.cyanAccent,
-                  letterSpacing: 2.5,
-                  fontWeight: FontWeight.bold,
+              Expanded(
+                child: TextButton(
+                  onPressed: () {
+                    changeDiceFace();
+                  },
+                  child: Image.asset('images/dice$rightDiceNumber.png',),
                 ),
               ),
-                SizedBox(
-                height: 20.0,
-                width: 150.0,
-                child: Divider(
-                  color: Colors.cyan.shade50,
-                ),
-              ),
-              Card(
-                color: Colors.white,
-                margin: const EdgeInsets.symmetric(
-                    vertical: 10.0, horizontal: 25.0),
-                child: ListTile(
-                  leading: const Icon(
-                    Icons.phone,
-                    color: Colors.teal,
-                  ),
-                  title: Text(
-                    "+88 01792488399",
-                    style: TextStyle(
-                      fontFamily: 'Source Sans Pro',
-                      fontSize: 20.0,
-                      color: Colors.teal.shade900,
-                    ),
-                  ),
-                ),
-              ),
-              Card(
-                color: Colors.white,
-                margin: const EdgeInsets.symmetric(
-                    vertical: 10.0, horizontal: 25.0),
-                child: ListTile(
-                  leading: const Icon(
-                    Icons.email,
-                    color: Colors.teal,
-                  ),
-                  title: Text(
-                    "sourav.iit.nstu@gmail.com",
-                    style: TextStyle(
-                      fontFamily: 'Source Sans Pro',
-                      fontSize: 20.0,
-                      color: Colors.teal.shade900,
-                    ),
-                  ),
-                ),
-              )
             ],
           ),
         ),
